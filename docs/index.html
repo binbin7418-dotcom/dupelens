@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DupeLens — Duplicate & Similar Photo Finder | Quarantine, Never Delete</title>
+<meta name="description" content="DupeLens finds byte-identical and near-duplicate photos (resized, re-compressed copies), moves extras into a quarantine folder — never deletes — then re-scans and proves it with a report. 100% local, one-time $29.">
+<style>
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;margin:0;color:#1c2733;line-height:1.6;background:#fbfcfe}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 20px 64px}
+  h1{font-size:2rem;line-height:1.25;margin:.2em 0}
+  h2{margin-top:2em;font-size:1.25rem}
+  .sub{font-size:1.1rem;color:#43536a}
+  .cta{display:inline-block;background:#0b6e4f;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0}
+  .card{background:#fff;border:1px solid #e3e9f0;border-radius:10px;padding:18px 20px;margin:14px 0}
+  .num{font-weight:700;color:#0b6e4f}
+  footer{color:#7a8798;font-size:.85rem;margin-top:48px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p><strong>DupeLens</strong></p>
+  <h1>Your photo library has the same photo four times.<br>Find every copy. Keep the best. Delete nothing.</h1>
+  <p class="sub">DupeLens scans a folder and groups byte-identical duplicates <em>and</em> near-duplicates — the resized, re-compressed copies your phone, chat apps and exports leave behind. Extra copies move to a quarantine folder, never the trash, and a re-check report proves what happened to every single file.</p>
+  <a class="cta" href="https://binbinster.gumroad.com/l/dupelens-duplicate-photo-finder">Get DupeLens — $29 one-time</a>
+
+  <h2>Built for people who are afraid of duplicate finders</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Never deletes.</strong> Duplicates are moved to a <code>DupeLens-Quarantine</code> folder with a restore manifest. One restore puts every file back in its original folder — nothing is ever overwritten.</li>
+      <li><strong>Proof, not promises.</strong> After quarantining, DupeLens re-scans the library and reports: groups remaining (target: zero), keepers verified in place, bytes freed, and every move listed from → to.</li>
+      <li><strong>Deterministic keeper rule.</strong> Highest resolution wins, then largest file, then earliest date. The report shows the keeper and the measured similarity of each copy — no black-box AI guessing.</li>
+    </ul>
+  </div>
+
+  <h2>What it catches</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Exact copies</strong> — matched by SHA-256, bit for bit</li>
+      <li><strong>Resized copies</strong> — in our seeded test, a half-size copy measured perceptual distance <span class="num">0</span> out of 64</li>
+      <li><strong>Re-compressed copies</strong> — a re-saved JPEG measured distance <span class="num">2</span>; unrelated photos measured 38</li>
+      <li><strong>Adjustable sensitivity</strong> — threshold 0–32, default 6. Stricter or wider net, your call, and the report shows the distance behind every match</li>
+    </ul>
+  </div>
+
+  <h2>Verified, not vibes</h2>
+  <div class="card">
+    <p>Seeded acceptance test, 7 photos with known ground truth (one photo in 4 copies, one in 2, one unique): both groups found, <span class="num">0 false positives</span>, after quarantine the re-scan showed <span class="num">0 groups remaining</span>, all 7 originals accounted for and byte-intact, restore brought every file back — <span class="num">27/27 checks passed</span>. A 300-photo test library scanned in under a second on the test machine.</p>
+  </div>
+
+  <h2>How it works</h2>
+  <div class="card">
+    <ol>
+      <li>Open DupeLens, choose your photo folder</li>
+      <li>Run a scan-only report first if you like — nothing moves</li>
+      <li>Or scan &amp; quarantine: keepers stay, extras move to quarantine, and you get the re-check report</li>
+    </ol>
+    <p>Windows 10/11. No account, no subscription, no upload. JPG, PNG, WebP, BMP, GIF and TIFF photos.</p>
+  </div>
+
+  <a class="cta" href="https://binbinster.gumroad.com/l/dupelens-duplicate-photo-finder">Get DupeLens — $29 one-time</a>
+
+  <footer>
+    <p>Honest limits: perceptual matching catches resizes and re-compression. Heavy edits (strong crops, filters) can push a copy past the threshold and be missed — the per-photo distances in the report let you judge every match yourself. HEIC/RAW files are not decoded in this version. Review the quarantine before emptying it; that is what the manifest and report are for.</p>
+  </footer>
+</div>
+</body>
+</html>
