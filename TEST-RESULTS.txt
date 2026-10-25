@@ -1,0 +1,64 @@
+DupeLens — TEST RESULTS (seeded acceptance, run for real on 2026-10-25)
+========================================================================
+Environment: Python 3.12.3, Pillow 13.0.0, ImageHash 4.3.2 (BSD-2-Clause),
+NumPy 2.5.4, SciPy 1.18.1 — Linux test VM.
+Harness: dev/test_acceptance.py (seed library with known ground truth,
+engine imported from repo/dupe_lens.py; no mocks, real files throughout).
+
+Seed library (7 files):
+  A/IMG_A_original.jpg      800x600, JPEG q90
+  A/IMG_A_copy.jpg          byte-identical copy of the original
+  A/IMG_A_resized.jpg       same photo resized to 400x300
+  A/IMG_A_recompressed.jpg  same photo re-saved at JPEG q50
+  B/IMG_B_original.png      800x600 PNG (a different photo)
+  B/IMG_B_copy.png          byte-identical copy
+  C/IMG_C_unique.jpg        a third photo, no copies
+
+Measured perceptual (pHash) distances, out of 64 bits:
+  original <-> resized        0
+  original <-> recompressed   2
+  original <-> photo B       38
+  original <-> photo C       38
+Default threshold used: 6.
+
+ACCEPTANCE: 27/27 checks passed.
+
+Scan phase:
+  [PASS] seed library built — 7 files
+  [PASS] scan counts every photo — scanned=7
+  [PASS] exactly 2 duplicate groups — groups=2
+  [PASS] group A has all 4 A-copies
+  [PASS] group B has both B-copies
+  [PASS] exact duplicates detected (A pair shares SHA-256)
+  [PASS] exact duplicates detected (B pair shares SHA-256)
+  [PASS] near duplicates detected (resized + recompressed are in group A)
+  [PASS] unique photo C is in no group
+  [PASS] false positives = 0 (no group mixes different photos)
+  [PASS] perceptual distance original<->resized within threshold 6 — d=0
+  [PASS] perceptual distance original<->recompressed within threshold 6 — d=2
+  [PASS] different photos are far apart (A<->B and A<->C > 20 bits) — 38, 38
+  [PASS] keeper of group A is the original
+  [PASS] keeper of group B is the original
+  [PASS] redundant copies = 4, reclaimable = 57.3 KB (seed scale)
+
+Quarantine + re-check phase (nothing deleted, moves only):
+  [PASS] 4 copies moved to quarantine (A copy, A resized, A recompressed, B copy)
+  [PASS] freed bytes = size of the 4 moved copies = 57.3 KB
+  [PASS] re-scan after quarantine: 0 duplicate groups remain
+  [PASS] all keepers verified in place — 2/2
+  [PASS] no photo lost: 3 remain in library + 4 in quarantine = 7
+  [PASS] quarantined files are byte-intact (SHA-256 unchanged)
+  [PASS] originals untouched at their paths (keepers + unique)
+
+Restore phase:
+  [PASS] restore moves all 4 back — restored=4, missing=0
+  [PASS] after restore the 2 groups are found again (nothing was harmed)
+  [PASS] after restore all 7 files are back in the library
+
+CLI end-to-end (separate run): scan -> clean -> restore all behaved as
+above (moved=4, groups_after=0, restored=4, 7 files back).
+
+Performance (honest, small scale): a generated library of 300 distinct
+photos (320x240 JPEG) scanned in 0.4-0.7 s across two runs on the test VM
+(≈420-720 photos/sec, SHA-256 + pHash + grouping included). No larger
+library was tested; the listing copy claims nothing beyond this.
